@@ -5,7 +5,7 @@
 // nueva del juego -- con eso alcanza para que a tu hermano/primo les
 // aparezca el aviso de actualización solos, sin que les tengas que
 // volver a mandar nada.
-const CACHE_VERSION = 'pvp-ima-v17'; // <-- subí este número en cada actualización (v2, v3, v4...)
+const CACHE_VERSION = 'pvp-ima-v18'; // <-- subí este número en cada actualización (v2, v3, v4...)
 
 const CORE_FILES = [
   './',
@@ -39,7 +39,15 @@ self.addEventListener('activate', (event) => {
 // ahí usa lo que tenga guardado en caché. Esto es lo que hace que la
 // actualización se note apenas la subís, en vez de quedar pegado con
 // una copia vieja guardada.
+//
+// IMPORTANTE: solo intercepta pedidos AL MISMO SITIO (tu propio
+// juego). Firebase (autenticación, base de datos en tiempo real) y
+// cualquier otro servicio externo pasan de largo sin que este
+// service worker los toque -- si no, podía llegar a interferir con
+// la conexión a Firebase (que es lo que necesitan crear sala PVP,
+// guardar en la nube, y buscar por código) y romperla.
 self.addEventListener('fetch', (event) => {
+  if (new URL(event.request.url).origin !== self.location.origin) return;
   event.respondWith(
     fetch(event.request)
       .then((response) => {
