@@ -5,7 +5,7 @@
 // nueva del juego -- con eso alcanza para que a tu hermano/primo les
 // aparezca el aviso de actualización solos, sin que les tengas que
 // volver a mandar nada.
-const CACHE_VERSION = 'pvp-ima-v51'; // <-- subí este número en cada actualización (v2, v3, v4...)
+const CACHE_VERSION = 'pvp-ima-v52'; // <-- subí este número en cada actualización (v2, v3, v4...)
 
 const CORE_FILES = [
   './',
